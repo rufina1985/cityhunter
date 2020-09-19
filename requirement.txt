@@ -1,0 +1,14 @@
+secedit /export /CFG c:\users\public\local_sec.ini /quiet
+
+在c:\users\public目录下查看local_sec.ini中是否有SeDenyRemoteInteractiveLogonRight这一项
+
+如果有,新建文件gp.inf,内容如下
+
+[version]
+signature="$CHICAGO$"
+[Privilege Rights]
+SeDenyNetworkLogonRight = Guest
+
+执行secedit /configure /db gp.sdb /cfg gp.inf
+
+执行后, 该服务器将拒绝guest账户远程桌面连接, 你新创建的用户应该就可以远程桌面登录了
